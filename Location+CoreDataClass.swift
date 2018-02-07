@@ -14,3 +14,5 @@ import CoreData
 public class Location: NSManagedObject {
 
 }
+
+//// er;mvc.c
