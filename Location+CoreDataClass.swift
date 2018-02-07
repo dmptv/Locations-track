@@ -15,6 +15,9 @@ import CoreData
 @objc(Location)
 public class Location: NSManagedObject {
 
+//    func () {
+//
+//    }
 }
 
 //// er;mvc.c
