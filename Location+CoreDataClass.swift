@@ -10,6 +10,8 @@
 import Foundation
 import CoreData
 
+// md.m;gfl;
+
 @objc(Location)
 public class Location: NSManagedObject {
 
