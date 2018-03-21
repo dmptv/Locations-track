@@ -10,7 +10,6 @@
 		9D161B851FD3DF71002C5065 /* CategoryPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D161B841FD3DF71002C5065 /* CategoryPickerViewController.swift */; };
 		9D161B871FD427F9002C5065 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D161B861FD427F9002C5065 /* ModelController.swift */; };
 		9D161B891FD436A2002C5065 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D161B881FD436A2002C5065 /* HudView.swift */; };
-		9D3EC1BC20622D72007F638E /* Bitbucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EC1BB20622D72007F638E /* Bitbucket.swift */; };
 		9D453EF81FD64C6600018B17 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D453EF71FD64C6600018B17 /* Functions.swift */; };
 		9D4DA4431FC0871F0082E100 /* LocationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4DA4421FC0871F0082E100 /* LocationDetailsViewController.swift */; };
 		9D585B8B1FBBD3EA00F01B11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D585B8A1FBBD3EA00F01B11 /* AppDelegate.swift */; };
@@ -31,7 +30,6 @@
 		9D161B841FD3DF71002C5065 /* CategoryPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPickerViewController.swift; sourceTree = "<group>"; };
 		9D161B861FD427F9002C5065 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		9D161B881FD436A2002C5065 /* HudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
-		9D3EC1BB20622D72007F638E /* Bitbucket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bitbucket.swift; sourceTree = "<group>"; };
 		9D453EF71FD64C6600018B17 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		9D4DA4421FC0871F0082E100 /* LocationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailsViewController.swift; sourceTree = "<group>"; };
 		9D585B871FBBD3EA00F01B11 /* MyLocations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyLocations.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				9D585B8C1FBBD3EA00F01B11 /* CurrentLocationViewController.swift */,
-				9D3EC1BB20622D72007F638E /* Bitbucket.swift */,
 				9D4DA4421FC0871F0082E100 /* LocationDetailsViewController.swift */,
 				9D161B841FD3DF71002C5065 /* CategoryPickerViewController.swift */,
 				9D585B8E1FBBD3EA00F01B11 /* LocationsViewController.swift */,
@@ -248,7 +245,6 @@
 				9D161B851FD3DF71002C5065 /* CategoryPickerViewController.swift in Sources */,
 				9D825B0D1FD79FDB0098A78B /* DataModel.xcdatamodeld in Sources */,
 				9D161B891FD436A2002C5065 /* HudView.swift in Sources */,
-				9D3EC1BC20622D72007F638E /* Bitbucket.swift in Sources */,
 				9D825B111FD7DAD40098A78B /* Location+CoreDataClass.swift in Sources */,
 				9D585B8D1FBBD3EA00F01B11 /* CurrentLocationViewController.swift in Sources */,
 			);

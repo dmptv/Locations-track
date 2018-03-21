@@ -15,9 +15,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    // Feature 1
-    
+        
     //MARK: - IBOutlets
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
