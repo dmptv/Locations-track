@@ -16,6 +16,8 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         super.init(coder: aDecoder)
     }
     
+    // Feature 1
+    
     //MARK: - IBOutlets
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
