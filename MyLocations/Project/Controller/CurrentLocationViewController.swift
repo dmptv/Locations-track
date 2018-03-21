@@ -17,6 +17,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     }
     
     // Feature 2
+    // Fix v1
         
     //MARK: - IBOutlets
     @IBOutlet weak var messageLabel: UILabel!
