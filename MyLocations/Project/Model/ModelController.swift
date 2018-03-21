@@ -14,6 +14,7 @@ struct Category {
 }
 
 class ModelController: NSObject {
+    
     var categories: [Category] = [Category(name: "No Category", isChecked: false),
                                   Category(name: "Apple Store", isChecked: false),
                                   Category(name: "Bar", isChecked: false),

@@ -14,38 +14,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    // Core Data
-    
     // This is the code you need to load the data model that you’ve defined earlier,
     // and to connect it to an SQLite data store.
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataModel")
         // loads the data from the database into memory and sets up the Core Data stack
-        container.loadPersistentStores(completionHandler: {
-            storeDescription, error in
-            
+        container.loadPersistentStores() { storeDescription, error in
             if let error = error {
                 fatalError("Could load data store: \(error)")
             }
-        })
-        
+        }
         return container
     }()
 
-    // To get the NSManagedObjectContext that we’re after,
-    // you can simply ask the persistentContainer for its viewContext property
     lazy var managedObjectContext: NSManagedObjectContext = self.persistentContainer.viewContext
     
-
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
-    {
-        let tabBarController = window!.rootViewController as! UITabBarController
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        let tabBarController = window!.rootViewController as! UITabBarController
         if let tabBarViewControllers = tabBarController.viewControllers {
-            let currentLocationViewController = tabBarViewControllers[0] as! CurrentLocationViewController
             
+            let currentLocationViewController = tabBarViewControllers[0] as! CurrentLocationViewController
+            // dependancy injection
             currentLocationViewController.managedObjectContext = managedObjectContext
+            
+            let navigationController = tabBarViewControllers[1] as! UINavigationController
+            let locationsViewController = navigationController.viewControllers[0] as! LocationsViewController
+            locationsViewController.managedObjectContext = managedObjectContext
+            // force the LocationsViewController to load its view immediately when the app starts up
+            let _ = locationsViewController.view
+            
+            let mapViewController = tabBarViewControllers[2] as! MapViewController
+            mapViewController.managedObjectContext = managedObjectContext
         }
         
         print(applicationDocumentsDirectory)
@@ -56,26 +57,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func listenForFatalCoreDataNotifications() {
-        
         NotificationCenter.default.addObserver(forName: MyManagedObjectContextSaveDidFailNotification,
                                                object: nil,
                                                queue: OperationQueue.main,
                                                using:
             { [weak self] notification in
                 
-                let alert = UIAlertController(title: "Internal Error",
-                                              message:
-                    "There was a fatal error in the app and it cannot continue.\n\n"
-                        + "Press OK to terminate the app. Sorry for the inconvenience.",
-                                              preferredStyle: .alert)
+                let alert = UIAlertController(title: "Internal Error", message: "There was a fatal error in the app and it cannot continue.\n\n" + "Press OK to terminate the app. Sorry for the inconvenience.", preferredStyle: .alert)
                 
-                let action = UIAlertAction(title: "OK",
-                                           style: .default)
-                { _ in
-                    
+                let action = UIAlertAction(title: "OK", style: .default) { _ in
                     // Instead of calling fatalError(), the closure creates an NSException object to terminate the app
                     // That’s a bit nicer and it provides more information to the crash log
-                    
                     let exception = NSException( name: NSExceptionName.internalInconsistencyException,
                                                  reason: "Fatal Core Data error",
                                                  userInfo: nil)

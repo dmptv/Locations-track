@@ -12,6 +12,10 @@ import CoreData
 
 class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate {
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     //MARK: - IBOutlets
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
@@ -41,7 +45,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // чтобы прятать labels после загрузки вызовем здесь тоже
+        // чтобы показывать или нет labels после загрузки вызовем здесь тоже
         updateLabels()
         configureGetButton()
     }
@@ -79,6 +83,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     
     
     // MARK: - CLLocationManagerDelegate
+    
     func locationManager(_ manager: CLLocationManager,
                          didFailWithError error: Error) {
         print(" *** locationManager didFailWithError \(error)")
@@ -88,7 +93,6 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         // to convert these names from enum back to an integer value you ask for the rawValue
         
         if (error as NSError).code == CLError.locationUnknown.rawValue {
-            
             // simply keep trying until you do find a location or
             // receive a more serious error
             return
@@ -98,13 +102,13 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         // object into a new instance variable
         
         lastLocationError = error
+        
         stopLocationManager()
         updateLabels()
         configureGetButton()
     }
 
-    func locationManager(_ manager: CLLocationManager,
-                         didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager,  didUpdateLocations locations: [CLLocation]) {
         
         // Core Location starts out with a fairly inaccurate locations
         // therefor we chose last one
@@ -114,7 +118,6 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
               String(format: "%@", newLocation))
         
         /// проверим accuracy, если нормальная то остановим
-        
         // ignore these cached locations if they are too old
         
         if newLocation.timestamp.timeIntervalSinceNow < -5 {
@@ -129,7 +132,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         }
         
         // We can use this distance to measure if our location updates are still improving
-        // greatestFiniteMagnitude -> maximum Double value
+        /// greatestFiniteMagnitude -> maximum Double value
         // This little trick gives it a gigantic distance if this is the very first reading
         // чтобы потом проверить если < 1 (метра)
         
@@ -151,8 +154,10 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             
             // clear out any previous error if there was one
             lastLocationError = nil
+            
             // stores the new CLLocation object into the location variable
             location = newLocation
+            
             updateLabels()
             
             // Wi-Fi might not be able to give you accuracy up to ten meters
@@ -177,6 +182,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             if !performingReverseGeocoding {
                 print("*** Going to geocode")
                 performingReverseGeocoding = true
+                
                 geocoder.reverseGeocodeLocation(newLocation,
                                                 completionHandler: { [unowned self]
                     placemarks, error in
@@ -186,7 +192,8 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
                     
                     self.lastGeocodingError = error
                     if error == nil,
-                        let pArr = placemarks, !pArr.isEmpty {
+                        let pArr = placemarks,
+                        !pArr.isEmpty {
                         self.placemark = pArr.last!
                     } else {
                         self.placemark = nil
@@ -199,7 +206,9 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         } else if distance < 1 {
             // если новая коорд не лучше прежней, а дистанция между ними 1 метр
             // и прошло > 10 секунд, то остановим manager
+            
             let timeInterval = newLocation.timestamp.timeIntervalSince(location!.timestamp)
+            
             if timeInterval > 10 {
                 print("*** Force done!")
                 
@@ -246,8 +255,9 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         }
     }
     
-    //MARK: - Start Stop udating
+    //MARK: - Start / Stop udating
     func startLocationManager() {
+        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -263,22 +273,10 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         }
     }
     
-    func stopLocationManager() {
-        if updatingLocation {
-            locationManager.stopUpdatingLocation()
-            locationManager.delegate = nil
-            updatingLocation = false
-            
-            if let timer = timer {
-                timer.invalidate()
-            }
-        }
-    }
-    
     // If after one minute there still is no valid location,
     // you stop the location manager, create your own error code, and update the screen
     
-    @objc func didTimeOut() {
+    @objc fileprivate func didTimeOut() {
         print("*** Time out")
         
         if location == nil {
@@ -297,6 +295,17 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         }
     }
     
+    func stopLocationManager() {
+        if updatingLocation {
+            locationManager.stopUpdatingLocation()
+            locationManager.delegate = nil
+            updatingLocation = false
+            
+            if let timer = timer {
+                timer.invalidate()
+            }
+        }
+    }
     
     // You put all this logic into a single method because that
     // makes it easy to change the screen when something has changed
@@ -304,10 +313,8 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     func updateLabels() {
         // если получили location
         if let location = location {
-            latitudeLabel.text =
-                String(format: "%.8f", location.coordinate.latitude)
-            longitudeLabel.text =
-                String(format: "%.8f", location.coordinate.longitude)
+            latitudeLabel.text = String(format: "%.8f", location.coordinate.latitude)
+            longitudeLabel.text = String(format: "%.8f", location.coordinate.longitude)
             tagButton.isHidden = false
             messageLabel.text = ""
             
@@ -322,7 +329,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             }
             
         } else {
-            // если не получили location, то пройдемся по возможным ошибкам
+            // если не получили location
             latitudeLabel.text = ""
             longitudeLabel.text = ""
             addressLabel.text = ""
@@ -331,8 +338,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             let statusMessage: String
             if let error = lastLocationError as NSError? {
                 // the error domain kCLErrorDomain, which means Core Location errors
-                if error.domain == kCLErrorDomain &&
-                    error.code == CLError.denied.rawValue {
+                if error.domain == kCLErrorDomain && error.code == CLError.denied.rawValue {
                     statusMessage = "Location Services Disabled"
                 } else {
                     statusMessage = "Error Getting Location"
@@ -355,13 +361,8 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     }
     
     func showLocationServicesDeniedAlert() {
-        let alert = UIAlertController(title: "Location Services Disabled",
-                                      message:
-            "Please enable location services for this app in Settings.",
-                                      preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK",
-                                     style: .default,
-                                     handler: nil)
+        let alert = UIAlertController(title: "Location Services Disabled", message: "Please enable location services for this app in Settings.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         present(alert, animated: true, completion: nil)
         alert.addAction(okAction)
     }
@@ -379,13 +380,12 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             
             // Both view controllers point to the same CLPlacemark object (or nil if placemark has no value)
             // If you want an object with a reference type to be copied when it is assigned to another variable, you can declare it as @NSCopying
+            //  @NSCopying var pl: CLPlacemark?
             controller.placemark = placemark
             
             controller.managedObjectContext = managedObjectContext
         }
     }
-    
-//    @NSCopying var pl: CLPlacemark?
     
     deinit {
         print(" *** CurrentLocationViewController deinited")

@@ -9,6 +9,7 @@
 import UIKit
 
 class CategoryPickerViewController: UITableViewController {
+    var selectedCategoryName = ""
     
     let categories = ["No Category",
                       "Apple Store",
@@ -22,7 +23,6 @@ class CategoryPickerViewController: UITableViewController {
                       "Landmark",
                       "Park"]
     
-    var selectedCategoryName = ""
     var selectedIndexPath = IndexPath()
 
     override func viewDidLoad() {
@@ -34,8 +34,8 @@ class CategoryPickerViewController: UITableViewController {
         
         for i in 0..<categories.count { //  alternative - for (i, category) in categories.enumerated()
             if categories[i] == selectedCategoryName {
-                selectedIndexPath = IndexPath(row: i,
-                                              section: 0)
+                // we stored index path 
+                selectedIndexPath = IndexPath(row: i, section: 0)
                 break
             }
         }
@@ -43,13 +43,11 @@ class CategoryPickerViewController: UITableViewController {
     }
 
     // MARK: - UITableViewDataSource
-    override func tableView(_ tableView: UITableView,
-                            numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count
     }
     
-    override func tableView(_ tableView: UITableView,
-                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell",
                                                  for: indexPath)
         let categoryName = categories[indexPath.row]
@@ -63,10 +61,8 @@ class CategoryPickerViewController: UITableViewController {
     }
     
     // MARK: - UITableViewDelegate
-    override func tableView(_ tableView: UITableView,
-                            didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row != selectedIndexPath.row {
-            
             // When the user taps a row, you want to remove the checkmark
             // from the previously selected cell and put it in the new cell
             

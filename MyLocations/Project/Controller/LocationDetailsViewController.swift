@@ -28,20 +28,36 @@ class LocationDetailsViewController: UITableViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
-    var coordinate = CLLocationCoordinate2D(latitude: 0,
-                                            longitude: 0)
-    var placemark: CLPlacemark?
-    var categoryName = "No Category"
-    
     // core data
     var managedObjectContext: NSManagedObjectContext!
     
+    // core location
+    var coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    var placemark: CLPlacemark?
+    var categoryName = "No Category"
+    var descriptionText = ""
     var date = Date()
+    
+    var locationToEdit: Location? {
+        didSet {
+            if let location = locationToEdit {
+                descriptionText = location.locationDescription
+                categoryName = location.category
+                date = location.date
+                coordinate = CLLocationCoordinate2DMake(location.latitude, location.longitude)
+                placemark = location.placemark
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        descriptionTextView.text = ""
+        if let location = locationToEdit {
+            title = "Edit Location"
+        }
+        
+        descriptionTextView.text = descriptionText
         categoryLabel.text = categoryName
         
         latitudeLabel.text = String(format: "%.8f", coordinate.latitude)
@@ -55,29 +71,19 @@ class LocationDetailsViewController: UITableViewController {
         
         dateLabel.text = format(date: date)
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self,
-                                                       action: #selector(hideKeyboard))
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         gestureRecognizer.cancelsTouchesInView = false
         tableView.addGestureRecognizer(gestureRecognizer)
     }
     
     @objc fileprivate func hideKeyboard(_ gestureRecognizer: UIGestureRecognizer) {
-        
-        // where the tap happened
         let point = gestureRecognizer.location(in: tableView)
-        
-        // index-path is currently displayed at that position
         let indexPath = tableView.indexPathForRow(at: point)
-        if indexPath != nil &&
-            indexPath!.section == 0 &&
-            indexPath!.row == 0 {
-            
+        if indexPath != nil && indexPath!.section == 0 && indexPath!.row == 0 {
             // you don’t want to hide the keyboard if the user
             // tapped in the row with the text view!
-            
             return
         }
-
         descriptionTextView.resignFirstResponder()
     }
     
@@ -108,13 +114,18 @@ class LocationDetailsViewController: UITableViewController {
     }
     
     
-    // MARK: - Actions
+    // MARK: - Actions - Hud View
     @IBAction func done() {
-        let hudView = HudView.hud(inView: navigationController!.view,
-                                  animated: true)
-        hudView.text = "Tagged"
+        let hudView = HudView.hud(inView: navigationController!.view, animated: true)
         
-        let location = Location(context: managedObjectContext)
+        let location: Location
+        if let temp = locationToEdit {
+            hudView.text = "Updated"
+            location = temp
+        } else {
+            hudView.text = "Tagged"
+            location = Location(context: managedObjectContext)
+        }
         
         location.locationDescription = descriptionTextView.text
         location.category = categoryName
@@ -139,39 +150,35 @@ class LocationDetailsViewController: UITableViewController {
     
     
     // MARK: - UITableViewDelegate
-    override func tableView(_ tableView: UITableView,
-                            heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 0 {
             return 88
         } else if indexPath.section == 2 && indexPath.row == 2 {
-            addressLabel.frame.size = CGSize(
-                width: view.bounds.width - 115,
-                height: 10000)
-            
-            // UILabel will word-wrap the text to fit the requested width
+            addressLabel.frame.size = CGSize(width: view.bounds.width - 115, height: 10000)
             // because set the text on the label in viewDidLoad()
-            
+            // word-wrap помог
             addressLabel.sizeToFit()
-            addressLabel.frame.origin.x = view.bounds.size.width -
-                addressLabel.frame.size.width - 15
+            addressLabel.frame.origin.x = view.bounds.size.width - addressLabel.frame.size.width - 15
+            
             return addressLabel.frame.size.height + 20
         } else {
-            return 44 }
+            return 44
+        }
     }
     
-    override func tableView(_ tableView: UITableView,
-                            willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath.section == 0 || indexPath.section == 1 {
+            // only two sections are tappable
             return indexPath
         } else {
-            // limits taps
+            // tap не срабатывает
             return nil
         }
     }
     
-    override func tableView(_ tableView: UITableView,
-                            didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
+            // if we tap not exactly on text view
             descriptionTextView.becomeFirstResponder()
         }
     }

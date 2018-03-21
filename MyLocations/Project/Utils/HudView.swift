@@ -15,8 +15,7 @@ class HudView: UIView {
     // convenience constructor
     // It creates and returns a new HudView instance
     
-    class func hud(inView view: UIView, animated: Bool
-        ) -> HudView {
+    class func hud(inView view: UIView, animated: Bool) -> HudView {
         
         let hudView = HudView(frame: view.bounds)
         hudView.isOpaque = false
@@ -28,6 +27,7 @@ class HudView: UIView {
         view.isUserInteractionEnabled = false
         
         hudView.show(animated: animated)
+        
         return hudView
     }
     
@@ -37,42 +37,36 @@ class HudView: UIView {
     // UIKit will then trigger a draw()
     
     override func draw(_ rect: CGRect) {
-        
         // When working with UIKit or Core Graphics you use CGFloat
         // instead of the regular Float or Double
         
         let boxWidth: CGFloat = 96
         let boxHeight: CGFloat = 96
-        let boxRect = CGRect(
-            
-            // The HUD rectangle centered horizontally and vertically on the screen
-            x: round((bounds.size.width - boxWidth) / 2),
-            
-            // uses the round() function to make sure the rectangle doesn’t end up on fractional pixel 
-            y: round((bounds.size.height - boxHeight) / 2),
-            
-            width: boxWidth,
-            height: boxHeight)
         
-        // take rounded rect
-        let roundedRect = UIBezierPath(roundedRect: boxRect,
-                                       cornerRadius: 10)
+        let boxRect = CGRect(
+            // The HUD rectangle centered horizontally and vertically on the screen
+            x: round((self.bounds.size.width - boxWidth) / 2),
+            // uses the round() function to make sure the rectangle doesn’t end up on fractional pixel
+            y: round((self.bounds.size.height - boxHeight) / 2),
+            width: boxWidth, height: boxHeight
+        )
+        
+        // create rounded rect
+        // UIBezierPath is a very handy object for drawing rectangles with rounded corners.
+        let roundedRect = UIBezierPath(roundedRect: boxRect, cornerRadius: 10)
         UIColor(white: 0.3, alpha: 0.8).setFill()
         roundedRect.fill()
         
-        // because UIImage(named) is a so-called failable initializer.
-        //it  can fail
+        // because UIImage(named) is a so-called failable initializer it can fail
         
         if let image = UIImage(named: "Checkmark") {
-            let imagePoint = CGPoint(
-                x: center.x - round(image.size.width / 2),
-                y: center.y - round(image.size.height / 2) - boxHeight / 8)
+            let imagePoint = CGPoint(x: center.x - round(image.size.width / 2),
+                                     y: center.y - round(image.size.height / 2) - boxHeight / 8)
             
             // it draws the image at that position
             image.draw(at: imagePoint)
             
-            // draw text instead of label
-            
+            // draw text (instead of label)
             let attribs = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16),
                             NSAttributedStringKey.foregroundColor: UIColor.white ]
             
@@ -88,7 +82,6 @@ class HudView: UIView {
     
     func show(animated: Bool) {
         if animated {
-            
             // Setup the initial state of the view before the animation starts
             alpha = 0
             

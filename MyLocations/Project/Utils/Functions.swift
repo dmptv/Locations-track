@@ -11,11 +11,8 @@ import Dispatch
 
 //  This is a free function, not a method inside an object,
 // and as a result it can be used from anywhere in your code
-func afterDelay(_ seconds: Double,
-                closure: @escaping () -> ()) {
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + seconds,
-                                  execute: closure)
+func afterDelay(_ seconds: Double, closure: @escaping () -> ()) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: closure)
 }
 
 
@@ -27,12 +24,11 @@ let applicationDocumentsDirectory: URL = {
     return paths[0]
 }()
 
-let MyManagedObjectContextSaveDidFailNotification = Notification.Name(rawValue: "MyManagedObjectContextSaveDidFailNotification")
+let MyManagedObjectContextSaveDidFailNotification = Notification.Name(rawValue:"MyManagedObjectContextSaveDidFailNotification")
 
 func fatalCoreDataError(_ error: Error) {
     print("*** Fatal error: \(error)")
-    NotificationCenter.default.post(name: MyManagedObjectContextSaveDidFailNotification,
-                                    object: nil)
+    NotificationCenter.default.post(name: MyManagedObjectContextSaveDidFailNotification, object: nil)
 }
 
 
