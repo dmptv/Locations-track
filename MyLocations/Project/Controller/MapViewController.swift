@@ -14,7 +14,23 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     
-    var managedObjectContext: NSManagedObjectContext!
+    var managedObjectContext: NSManagedObjectContext! {
+        didSet {
+            NotificationCenter.default.addObserver(forName:
+                Notification.Name.NSManagedObjectContextObjectsDidChange,
+                                                   object: managedObjectContext,
+                                                   queue: OperationQueue.main) { notification in
+                                                    if self.isViewLoaded { // !!!
+                                                        if let dictionary = notification.userInfo {
+                                                            print("inserted", dictionary["inserted"] ?? [])
+                                                            print("deleted", dictionary["deleted"] ?? [])
+                                                            print("updated", dictionary["updated"] ?? [])
+                                                        }
+                                                        self.updateLocations()
+                                                    }
+            }
+        }
+    }
     
     var locations = [Location]()
     
@@ -94,7 +110,20 @@ class MapViewController: UIViewController {
     }
     
     @objc func showLocationDetails(_ sender: UIButton) {
+        performSegue(withIdentifier: "EditLocation", sender: sender)
     }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EditLocation" {
+            let navigationController = segue.destination as! UINavigationController
+            let controller = navigationController.topViewController as! LocationDetailsViewController
+            controller.managedObjectContext = managedObjectContext
+            let button = sender as! UIButton
+            let location = locations[button.tag]
+            controller.locationToEdit = location
+        }
+        }
    
 }
 
@@ -133,6 +162,12 @@ extension MapViewController: MKMapViewDelegate {
     
 }
 
+extension MapViewController: UINavigationBarDelegate {
+    // This tells the navigation bar to extend under the status bar area
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached
+    }
+}
 
 
 
