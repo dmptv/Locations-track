@@ -21,6 +21,7 @@ class MapViewController: UIViewController {
                                                    object: managedObjectContext,
                                                    queue: OperationQueue.main) { notification in
                                                     if self.isViewLoaded { // !!!
+                                                        // it helps find solution to not fetch all locations
                                                         if let dictionary = notification.userInfo {
                                                             print("inserted", dictionary["inserted"] ?? [])
                                                             print("deleted", dictionary["deleted"] ?? [])
