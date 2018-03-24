@@ -63,6 +63,11 @@ class LocationDetailsViewController: UITableViewController {
         
         if let location = locationToEdit {
             title = "Edit Location"
+            if location.hasPhoto {
+                if let theImage = location.photoImage {
+                    show(image: theImage)
+                }
+            }
         }
         
         descriptionTextView.text = descriptionText
@@ -148,6 +153,7 @@ class LocationDetailsViewController: UITableViewController {
         } else {
             hudView.text = "Tagged"
             location = Location(context: managedObjectContext)
+            location.photoID = nil
         }
         
         location.locationDescription = descriptionTextView.text
@@ -156,6 +162,21 @@ class LocationDetailsViewController: UITableViewController {
         location.longitude = coordinate.longitude
         location.date = date
         location.placemark = placemark
+        
+        if let image = image {
+            if !location.hasPhoto {
+                location.photoID = Location.nextPhotoID() as NSNumber
+            }
+            // If a location's photo existed, you simply keep the same ID and overwrite the existing JPEG file
+            if let data = UIImageJPEGRepresentation(image, 0.5) {
+                do {
+                    // save Data object to path given by photoURL property
+                    try data.write(to: location.photoURL, options: .atomic)
+                } catch {
+                    print("Error writing file: \(error)")
+                }
+            }
+        }
         
         do {
             try managedObjectContext.save()
@@ -175,16 +196,16 @@ class LocationDetailsViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch (indexPath.section, indexPath.row) {
-            case (0, 0):
+        case (0, 0):
             return 88
-            case (1, _):
+        case (1, _):
             return imageView.isHidden ? 44 : 280
-            case (2, 2):
+        case (2, 2):
             addressLabel.frame.size = CGSize(width: view.bounds.size.width - 115, height: 10000)
             addressLabel.sizeToFit()
             addressLabel.frame.origin.x = view.bounds.size.width - addressLabel.frame.size.width - 15
             return addressLabel.frame.size.height + 20
-            default:
+        default:
             return 44
         }
     }

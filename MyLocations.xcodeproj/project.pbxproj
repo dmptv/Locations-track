@@ -18,6 +18,7 @@
 		9D585B921FBBD3EA00F01B11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D585B901FBBD3EA00F01B11 /* Main.storyboard */; };
 		9D585B941FBBD3EA00F01B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D585B931FBBD3EA00F01B11 /* Assets.xcassets */; };
 		9D585B971FBBD3EA00F01B11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D585B951FBBD3EA00F01B11 /* LaunchScreen.storyboard */; };
+		9D6AE62B2066B271004C4D61 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D6AE62A2066B271004C4D61 /* UIImage+Resize.swift */; };
 		9D825B0D1FD79FDB0098A78B /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D825B0B1FD79FDB0098A78B /* DataModel.xcdatamodeld */; };
 		9D825B111FD7DAD40098A78B /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D825B0F1FD7DAD40098A78B /* Location+CoreDataClass.swift */; };
 		9D825B121FD7DAD40098A78B /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D825B101FD7DAD40098A78B /* Location+CoreDataProperties.swift */; };
@@ -40,6 +41,7 @@
 		9D585B931FBBD3EA00F01B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D585B961FBBD3EA00F01B11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D585B981FBBD3EA00F01B11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D6AE62A2066B271004C4D61 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		9D825B0C1FD79FDB0098A78B /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		9D825B0F1FD7DAD40098A78B /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9D825B101FD7DAD40098A78B /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			children = (
 				9D453EF71FD64C6600018B17 /* Functions.swift */,
 				9D161B881FD436A2002C5065 /* HudView.swift */,
+				9D6AE62A2066B271004C4D61 /* UIImage+Resize.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				9D453EF81FD64C6600018B17 /* Functions.swift in Sources */,
 				9D161B871FD427F9002C5065 /* ModelController.swift in Sources */,
 				9DA712A42060082B00E60251 /* MapViewController.swift in Sources */,
+				9D6AE62B2066B271004C4D61 /* UIImage+Resize.swift in Sources */,
 				9DA7129F205F9CD000E60251 /* LocationCell.swift in Sources */,
 				9D161B851FD3DF71002C5065 /* CategoryPickerViewController.swift in Sources */,
 				9D825B0D1FD79FDB0098A78B /* DataModel.xcdatamodeld in Sources */,

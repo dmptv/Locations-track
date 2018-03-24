@@ -412,24 +412,29 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ini-Nh-jNr">
-                                            <rect key="frame" x="7" y="11" width="332" height="21"/>
+                                            <rect key="frame" x="90" y="11" width="269" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y6Q-dI-DWU">
-                                            <rect key="frame" x="7" y="34" width="359" height="17"/>
+                                            <rect key="frame" x="90" y="34" width="269" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z8B-pi-huC">
+                                            <rect key="frame" x="16" y="2" width="52" height="52"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="addressLabel" destination="y6Q-dI-DWU" id="CGq-hV-FUr"/>
                                     <outlet property="descriptionLabel" destination="Ini-Nh-jNr" id="Bsb-62-IyJ"/>
+                                    <outlet property="photoImageView" destination="Z8B-pi-huC" id="nbz-qg-qSZ"/>
                                     <segue destination="6Y8-AR-u7h" kind="presentation" identifier="EditLocation" id="ICT-Lp-PNX"/>
                                 </connections>
                             </tableViewCell>
@@ -443,7 +448,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B2N-6h-EQJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1540" y="23"/>
+            <point key="canvasLocation" x="1540" y="22.906403940886701"/>
         </scene>
         <!--Map-->
         <scene sceneID="WNC-Fe-kOX">
@@ -517,6 +522,6 @@
         <image name="first" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BCF-Et-Nv7"/>
+        <segue reference="ICT-Lp-PNX"/>
     </inferredMetricsTieBreakers>
 </document>

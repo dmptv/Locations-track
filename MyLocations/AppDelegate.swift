@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mapViewController.managedObjectContext = managedObjectContext
         }
         
-        print(applicationDocumentsDirectory)
+        print("*** applicationDocumentsDirectory", applicationDocumentsDirectory)
         
         listenForFatalCoreDataNotifications()
         
