@@ -30,6 +30,7 @@ public class Location: NSManagedObject {
     }
     
     public class func nextPhotoID() -> Int {
+        // uses merely for calculating id
         let userDefaults = UserDefaults.standard
         let currentID = userDefaults.integer(forKey: "PhotoID")
         userDefaults.set(currentID + 1, forKey: "PhotoID")

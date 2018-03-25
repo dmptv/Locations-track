@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var managedObjectContext: NSManagedObjectContext = self.persistentContainer.viewContext
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+                
         let tabBarController = window!.rootViewController as! UITabBarController
         if let tabBarViewControllers = tabBarController.viewControllers {
             
@@ -52,8 +52,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("*** applicationDocumentsDirectory", applicationDocumentsDirectory)
         
         listenForFatalCoreDataNotifications()
+        customizeAppearance()
         
         return true
+    }
+    
+    func customizeAppearance() {
+        UINavigationBar.appearance().barTintColor = UIColor.black
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white ]
+        UITabBar.appearance().barTintColor = UIColor.black
+        let tintColor = UIColor(red: 255/255.0, green: 238/255.0, blue: 136/255.0, alpha: 1.0)
+        UITabBar.appearance().tintColor = tintColor
     }
     
     func listenForFatalCoreDataNotifications() {
