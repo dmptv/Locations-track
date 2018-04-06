@@ -105,11 +105,14 @@ class LocationDetailsViewController: UITableViewController {
     }
     
     func listenForBackgroundNotification() {
-        observer = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidEnterBackground, object: nil, queue: OperationQueue.main) { [weak self] _ in
-            if self?.presentedViewController != nil {
-                self?.dismiss(animated: false, completion: nil)
-            }
-            self?.descriptionTextView.resignFirstResponder()
+        observer = NotificationCenter.default.addObserver(
+            forName: Notification.Name.UIApplicationDidEnterBackground,
+            object: nil,
+            queue: OperationQueue.main) { [weak self] _ in
+                if self?.presentedViewController != nil {
+                    self?.dismiss(animated: false, completion: nil)
+                }
+                self?.descriptionTextView.resignFirstResponder()
         }
     }
     

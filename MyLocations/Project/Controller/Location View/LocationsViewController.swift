@@ -46,6 +46,7 @@ class LocationsViewController: UITableViewController {
         tableView.backgroundColor = UIColor.black
         tableView.separatorColor = UIColor(white: 1.0, alpha: 0.2)
         tableView.indicatorStyle = .white
+        
         tableView.sectionHeaderHeight = 28
     }
     

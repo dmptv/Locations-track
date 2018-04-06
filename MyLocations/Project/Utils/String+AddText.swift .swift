@@ -14,6 +14,7 @@ extension String {
             if !isEmpty {
                 self += separator
             }
-            self += text }
+            self += text
+        }
     }
 }
